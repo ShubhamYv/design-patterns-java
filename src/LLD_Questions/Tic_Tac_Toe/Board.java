@@ -4,41 +4,59 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
-    public int size;
-    public PlayingPiece[][] board;
+    private int size;
+    private Cell[][] cells;
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public Cell[][] getCells() {
+        return cells;
+    }
+
+    public void setCells(Cell[][] cells) {
+        this.cells = cells;
+    }
 
     public Board(int size) {
         this.size = size;
-        board = new PlayingPiece[size][size];
+        cells = new Cell[size][size];
+        // Initialize cells with null values initially
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                cells[i][j] = new Cell(i, j, null);
+            }
+        }
     }
 
     public boolean addPiece(int row, int column, PlayingPiece playingPiece) {
-        if (board[row][column] != null) {
+        Cell cell = cells[row][column];
+        if (cell.getPiece() != null) {
             return false;
         }
-        board[row][column] = playingPiece;
+        cell.setPiece(playingPiece);
         return true;
     }
 
     public List<Cell> getFreeCells() {
         List<Cell> freeCells = new ArrayList<>();
-
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                if (board[i][j] == null) {
-                    freeCells.add(new Cell(i, j));
+                if (cells[i][j].getPiece() == null) {
+                    freeCells.add(cells[i][j]);
                 }
             }
         }
-
         return freeCells;
     }
 
     public void printBoard() {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                if (board[i][j] != null) {
-                    System.out.print(board[i][j].pieceType.name() + "   ");
+                PlayingPiece piece = cells[i][j].getPiece();
+                if (piece != null) {
+                    System.out.print(piece.getPieceType().name() + "   ");
                 } else {
                     System.out.print("    ");
                 }
@@ -46,5 +64,9 @@ public class Board {
             }
             System.out.println();
         }
+    }
+
+    public int getSize() {
+        return size;
     }
 }

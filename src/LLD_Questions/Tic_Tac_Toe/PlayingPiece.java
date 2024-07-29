@@ -1,9 +1,13 @@
 package LLD_Questions.Tic_Tac_Toe;
 
-public class PlayingPiece {
-    public PieceTypeEnum pieceType;
+public abstract class PlayingPiece {
+    private PieceTypeEnum pieceType;
 
-    PlayingPiece(PieceTypeEnum pieceType) {
+    protected PlayingPiece(PieceTypeEnum pieceType) {
         this.pieceType = pieceType;
+    }
+
+    public PieceTypeEnum getPieceType() {
+        return pieceType;
     }
 }
